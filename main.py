@@ -33,7 +33,7 @@ def random_key():
 
 app = Flask(__name__)
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
         uploadfile = request.files['uploadfile']
