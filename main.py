@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, redirect, request, render_template
 from sqlite3 import OperationalError
 import string
 import sqlite3
@@ -12,7 +12,6 @@ host = 'http://localhost:5000/'
 def current_time():
   return int(time.time())
 
-#Assuming main.db is in your app root folder
 def db_check():
     create_image_keys_table = """
         CREATE TABLE image_keys (
@@ -48,6 +47,7 @@ def upload_file():
         k.set_contents_from_string(uploadfile.stream.read())
         k.make_public()
         insert_image_to_db(image_key)
+        return redirect(u'/images/{}'.format(image_key))
     return render_template('upload.html')
 
 @app.route('/images/<image_key>', methods=['GET'])
