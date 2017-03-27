@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -9,8 +10,11 @@
     <meta name="viewport" content="width=device-width, minimum-scale=0.1">
     <title>ASFIM</title>
 </head>
-<body style="margin: 0px; background: #0e0e0e;">
+<body style="margin: 0px; background: #ffffff;">
+<div class="img">
 {% if image_url %}
-    <img src="{{ image_url }}";></body>
+    <img src="{{ image_url }}">
 {% endif %}
+</div>
+</body>
 </html>
