@@ -1,8 +1,8 @@
 # Personal configuration
 settings.py
 
-# Personal db
-main.db
+# Database files
+*.db
 
 #PyCharm project settings
 .idea/
