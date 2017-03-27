@@ -1,58 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="static/js/bootstrap-filestyle.min.js"> </script>
+
 <head>
   <title>AFSIM</title>
-  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
+
 <body>
-  
-<div class="container">
-  <h1>A Fucking Simple Image Host</h1>
-  <p>afsim.com</p>
+
+<div class="image-drop-zone" id="dropContainer">
+
+    <div class="container">
+        <h1>A Fucking Simple Image Host</h1>
+        <p>Drag image anywhere to upload...</p>
+    </div>
+
+    <div class="container">
+        <form method="POST" id="uploadform" enctype="multipart/form-data">
+            <input type="file" id="uploadfile" name="uploadfile" accept="image/*" class="filestyle" data-buttonText="Pick image" data-icon="false" data-size="nr" data-placeholder="No file selected" multiple hidden>
+            <input type="submit" id="uploadbutton" class="btn btn-success" value="Upload" style="position: absolute; left: -9999px"/>
+        </form>
+    </div>
 </div>
 
-<div class="container">
-  <div id="dropContainer" style="border:1px solid black;height:100px;">
-    Drag image here...
-  </div>
-    <form method="POST" id="uploadform" enctype="multipart/form-data">
-        <label class="btn btn-default btn-file">
-            <input type="file" id="uploadfile" name="uploadfile" accept="image/*" multiple hidden>
-        </label>
-        <input type="submit" id="uploadbutton" class="btn btn-success" value="Upload" onclick="return changeText();">
-    </form>
-</div>
+<script type="text/javascript">
+    // Automatically upload the file after selection.
+    uploadfile.onchange = function(evt) {
+        document.getElementById('uploadform').submit();
+    };
 
-<script type="text/javascript"> 
-    function changeText(){
-        var submit = document.getElementById("uploadbutton");
-        submit.value = 'Uploading...';
+    // Drag events need to have 'preventDefault' called in order for the 'drop' event to register.
+    // See: https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Drag_operations#droptargets
+    dropContainer.ondragover = dropContainer.ondragenter = function(evt) {
+        evt.preventDefault();
+    };
 
-        var dropContainer = document.getElementById("dropContainer");
-        dropContainer.value = "Uploading...";
-
-        return true;
+    dropContainer.ondrop = function(evt) {
+        uploadfile.files = evt.dataTransfer.files;
+        evt.preventDefault();
+        // Automatically upload after file drop
+        document.getElementById('uploadform').submit();
     };
 </script>
 
-<script type="text/javascript"> 
-  // dragover and dragenter events need to have 'preventDefault' called
-  // in order for the 'drop' event to register. 
-  // See: https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Drag_operations#droptargets
-  dropContainer.ondragover = dropContainer.ondragenter = function(evt) {
-    evt.preventDefault();
-  };
-  dropContainer.ondrop = function(evt) {
-    // pretty simple -- but not for IE :(
-    uploadfile.files = evt.dataTransfer.files;
-    evt.preventDefault();
-    document.getElementById('uploadform').submit();
-  };
-</script>
-
 </body>
+
 </html>
